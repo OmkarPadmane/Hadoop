@@ -1,0 +1,133 @@
+start-yarn.sh
+  106  jps
+  107  hdfs dfs -ls
+  108  hdfs dfs -ls /
+  109  vi demo.txt
+  110  ls
+  111  hdfs dfs -copyFromlocal demo.txt /
+  112  hdfs dfs -copyFromLocal demo.txt /
+  113  hdfs dfs -ls /
+  114  hdfs dfs -mkdir /hpcsa
+  115  hdfs dfs -ls /
+  116  vi demo2.txt
+  117  hdfs dfs -put demo2.txt /hpcsa
+  118  hdfs dfs -ls /hpcsa
+  119  touch sopya{1..20} 
+  120  hdfs dfs -put sopya* /hpcsa
+  121  hdfs dfs -ls p
+  122  hdfs dfs -ls /hpcsa
+  123  history
+  124  hdfs dfs -ls p
+  125  hdfs dfs -cat /demo.txt
+  126  hdfs dfs -chmod 660 /hpcsa/demo.txt
+  127  hdfs dfs -chmod 660 /hpcsa/demo2.txt
+  128  hdfs dfs -la/hpcsa
+  129  hdfs dfs -ls /hpcsa
+  130  mkdir result
+  131  cd result/
+  132  ls
+  133  hdfs dfs -copyToLocal /hpcsa/demo2.txt .
+  134  ls
+  135  hdfs dfs -copyToLocal /hpcsa/sopya* .
+  136  ls
+  137  rm -rf *.txt
+  138  ls
+  139  rm -rf sopya*
+  140  ls
+  141  hdfs dfs -get /data/*.tx .
+  142  hdfs dfs -get /data/*.txt .
+  143  hdfs dfs -get /demo*.txt .
+  144  ls
+  145  nano ressult.txt
+  146  ls
+  147  hdfs dfs -mv ressult.txt /hpcsa
+  148  hdfs dfs -moveFromLocal report* /hpcsa
+  149  ls
+  150  touch report{1..2}
+  151  rm -r report*
+  152  ls
+  153  touch report.txt{1..2}
+  154  ls
+  155  rm -r report*
+  156  ls
+  157  touch report{1..2}.txt
+  158  ls
+  159  hdfs dfs -mkdir /hpcsa/back
+  160  hdfs dfs -mkdir /hpcsa/current
+  161  ls
+  162  hdfs dfs -ls
+  163  hdfs dfs -ls /hpcsa
+  164  hdfs dfs -moveFromLocal  report*.txt /hpcsa
+  165  hdfs dfs -
+  166  hdfs dfs -moveFromLocal  report*.txt /hpcsa/current
+  167  hdfs dfs -moveFromLocal  report*.txt /hpcsa/
+  168  ls
+  169  hdfs dfs -rm -f  report*.txt
+  170  hdfs dfs -ls /hpcsa
+  171  hdfs dfs -rm -f  report*.txt /hpcsa
+  172  hdfs dfs -ls /hpcsa
+  173  hdfs dfs -delete  report*.txt /hpcsa
+  174  hdfs dfs -delete  report*.txt 
+  175  hdfs dfs -mv  report2.txt /hpcsa.back
+  176  hdfs dfs -ls /hpcsa
+  177  hdfs dfs -mv  /hpcsa/report2.txt /hpcsa/back
+  178  hdfs dfs -mv  /hpcsa/report1.txt /hpcsa/current
+  179  hdfs dfs -ls /hpcsa/back
+  180  hdfs dfs -ls /hpcsa/current
+  181  hdfs dfs -cp  report1.txt /hpcsa
+  182  hdfs dfs -cp  /hpcsa/back/report2.txt /hpcsa
+  183  hdfs dfs -cp  /hpcsa/current/report1.txt /hpcsa
+  184  hdfs dfs -ls /hpcsa/current
+  185  hdfs dfs -ls /hpcsa/back
+  186  hdfs dfs -ls /hpcsa
+  187  history 
+  188  hdfs dfs -ls 
+  189  hdfs dfs -ls /
+  190  hdfs dfs -rm -r -f /hpcsa/
+  191  hdfs dfs -getmerge /output/test.
+  192  hdfs dfs -mkdir /hpcsa/output1
+  193  hdfs dfs -mkdir output1
+  194  hdfs dfs -mkdir /output1
+  195  hdfs dfs -mkdir /output2
+  196  nano text1.txt
+  197  nano text2.txt
+  198  hdfs dfs -put text1.txt /output1
+  199  hdfs dfs -put text2.txt /output2
+  200  hdfs dfs -getmerge /output1/text1.txt /output2.text2.txt output.txt
+  201  hdfs dfs -getmerge /output1/text1.txt /output2/text2.txt output.txt
+  202  hdfs dfs -ls /
+  203  hdfs dfs -ls /output
+  204  ls
+  205  cat output.txt 
+  206  hdfs dfs -putmerge text1.txt text2.txt 
+  207  ls
+  208  sudo apt install net-tools -y
+  209  netstat -pltn
+  210  cd
+  211  cd Downloads/
+  212  ls
+  213  hdfs dfs -copyFromLocal netflix_titles.csv / 
+  214  hdfs dfs -copyFromLocal Youth_Tobacco.csv.csv / 
+  215  hdfs dfs -copyFromLocal Youth_Tobacco.csv / 
+  216  hdfs dfs / 
+  217  hdfs dfs -ls /
+  218  cd /usr/local/hadoop/hd_store
+  219  ls
+  220  cd namenode/
+  221  ls
+  222  cd current/
+  223  ls
+  224  cat VERSION 
+  225  ls -l
+  226  cd current
+  227  ls
+  228  cd -l
+  229  cd -
+  230  cd
+  231  hdfs getconf -confkey dfs.blocksize
+  232  stop yarn.sh
+  233  stop-yarn.sh
+  234  stop-dfs.sh
+  235  jps
+  236  exit
+
