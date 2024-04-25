@@ -1,0 +1,61 @@
+ 
+   47  nano .bashrc
+   48  sudo hostnamectl set-hostname DN3
+   49  sudo hostname DN3
+
+
+--- in Master 
+
+$ sudo nano /etc/hosts
+	add this - 
+		192.168.149.136 DN3
+
+
+$ nano /usr/local/hadoop/etc/hadoop/workers 
+	add this -	
+	 	DN3
+
+
+--- Apply datanode 2 services to the datanode 3 
+	
+	$ scp /etc/hosts master@DN3:/home/master
+
+
+--- change permission of file in DN-3
+	$ sudo chown -R master:master /usr/local/hadoop
+	$ sudo chmod -R 755 /usr/local/hadoop
+
+
+--- copy all files from the /usr/local/hadoop/etc/hadoop/
+	$ sudo rsync -a /usr/local/hadoop/etc/hadoop/* master@DN3:/usr/local/hadoop/etc/hadoop
+
+
+---- check the connectivity of DN# to Master 
+	$ ping master
+
+
+---- start Datanode from DN-3
+	$ hadoop-daemon.sh start datanode
+
+	$ jps
+
+---- update DN1 file /etc/hosts
+	$ sudo nano /etc/hosts
+	- 192.168.149.136 DN3
+
+
+
+
+---- and then check all DN are running or not on Master web
+	http://master:9870/
+	if DN3 not showing here 
+	   then run 
+		$ hdfs dfsadmin -refreshNodes
+
+
+---- to start nodemanager service of DN3 
+
+	$ yarn-demon.sh start nodemanager
+
+
+

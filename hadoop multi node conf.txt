@@ -1,0 +1,186 @@
+ 1  cd /usr/lib/jvm/java-
+    2  cd /usr/lib/jvm
+    3  ls
+    4  cd java-8-openjdk-amd64/
+    5  pwd
+    6  ls
+    7  nano ~/.bashrc
+    8  sudo apt update -y
+    9  sudo nano /etc/resolv.conf
+   10  sudo apt update
+   11  sudo apt install ssh vim pdsh openjdk-8-jdk git -y
+   12  kill 7657
+   13  sudo kill 7657
+   14  sudo apt install ssh vim pdsh openjdk-8-jdk git -y
+   15  sudp p kill 7657
+   16  sudp  pkill 7657
+   17  sudo kill 9 7657
+   18  sudo apt install ssh vim pdsh openjdk-8-jdk git -y
+   19  sudo kill 7657
+   20  ps
+   21  sudo apt install ssh vim pdsh openjdk-8-jdk git -y
+   22  sudo apt install ssh
+   23  sudo pkill 9 7657
+   24  sudo pkill --help
+   25  sudo pkill 7657
+   26  sudo apt install ssh
+   27  sudo apt install ssh vim pdsh openjdk-8-jdk git -y
+   28  sudo apt install net-tools -y
+   29  sudo mkdir /usr/local/hadoop
+   30  cd 
+   31  cd Downloads/
+   32  ls
+   33  tar xvzf hadoop-3.4.0.tar.gz 
+   34  sudo apt install cmatrix
+   35  cmatrix 
+   36  sudo mv hadoop-3.4.0/* /usr/local/hadoop
+   37  ls  /usr/local/hadoop
+   38  ls  -a /usr/local/hadoop
+   39  sudo chown-R hduser:hduser /usr/local/hadoop
+   40  sudo chown -R hduser:hduser /usr/local/hadoop
+   41  sudo chown -R master:master /usr/local/hadoop
+   42  sudo chown -R 755 /usr/local/hadoop
+   43  cd
+   44  nano ~/.bashrc
+   45  sudo init 6
+   46  nano ~/.bashrc
+   47  sudo hostnamectl set-hostname master
+   48  sudo hostname master
+   49  cd /usr/local/hadoop
+   50  cat ~/.bashrc
+   51  cd etc/hadoo
+   52  cd etc/hadoop
+   53  nano hadoop-env.sh
+   54  sudo nano hadoop-env.sh
+   55  nano hadoop-env.sh
+   56  sudo visudo
+   57  sudo chown -R master:master  /usr/local/hadoop
+   58  nano hadoop-env.sh
+   59  nano core-site.xml
+   60  nano hdfs-site.xml
+   61  nano yarn-site.xml
+   62  nano mapred-site.xml
+   63  nano workers
+   64  ip a
+   65  cd
+   66  sudo nano /etc/hosts
+   67  ssh-keygen -t rsa
+   68  ssh-copy-id ~/.ssh/id_rsa.pub
+   69  ssh-copy-id ~/.ssh/id_rsa.pub master@DN1
+   70  ssh-copy-id -i ~/.ssh/id_rsa.pub master@DN1
+   71  ssh-copy-id -i ~/.ssh/id_rsa.pub master@DN2
+   72  scp /etc/hosts master@DN1:/home/hduser
+   73  scp /etc/hosts master@DN1:/home/master
+   74  scp /etc/hosts master@DN2:/home/master
+   75  scp /usr/local/hadoop/etc/hadoop/core-site.xml master@DN1:/usr/local/hadoop/etc/hadoop/
+   76  scp /usr/local/hadoop/etc/hadoop/core-site.xml master@DN1:/usr/local/hadoop/etc/hadoop
+   77  scp /usr/local/hadoop/etc/hadoop/core-site.xml master@DN2:/usr/local/hadoop/etc/hadoop
+   78  scp /usr/local/hadoop/etc/hadoop/hdfs-site.xml master@DN1:/usr/local/hadoop/etc/hadoop
+   79  scp /usr/local/hadoop/etc/hadoop/hdfs-site.xml master@DN2:/usr/local/hadoop/etc/hadoop
+   80  scp /usr/local/hadoop/etc/hadoop/yarn-site.xml master@DN1:/usr/local/hadoop/etc/hadoop
+   81  scp /usr/local/hadoop/etc/hadoop/yarn-site.xml master@DN2:/usr/local/hadoop/etc/hadoop
+   82  scp /usr/local/hadoop/etc/hadoop/mapred-site.xml master@DN1:/usr/local/hadoop/etc/hadoop
+   83  scp /usr/local/hadoop/etc/hadoop/mapred-site.xml master@DN2:/usr/local/hadoop/etc/hadoop
+   84  scp /usr/local/hadoop/etc/hadoop/hadoop-env.sh master@DN1:/usr/local/hadoop/etc/hadoop
+   85  scp /usr/local/hadoop/etc/hadoop/hadoop-env.sh master@DN2:/usr/local/hadoop/etc/hadoop
+   86  mkdir /usr/local/hadoop/hd-data
+   87  hadoop namenode -format
+   88  history
+   89  nano ~/.bashrc
+   90  ls /usr/local/hadoop/hd-data/nn
+   91  ls -a /usr/local/hadoop/hd-data/nn
+   92  ls -a /usr/local/hadoop
+   93  ls  /usr/local/hadoop
+   94  cd hd-data
+   95  ls  /usr/local/hadoop/hd-data/
+   96  ls /usr/local/hadoop/hd-data/
+   97  ls /usr/local/hadoop/hd-data
+   98  cd /usr/local/hadoop/hd-data
+   99  ls
+  100  hadoop namenode -format
+  101  ls
+  102  ls 
+  103  cd
+  104  ls /usr/local/hadoop/hd-data/
+  105  cd /usr/local/hadoop/
+  106  cd etc/hadoop/
+  107  nano hdfs-site.xml 
+  108  cd ..
+  109  hadoop namenode -format
+  110  cd hadoop
+  111  nano hdfs-site.xml
+  112  nano core-site.xml
+  113  cd /tmp/hadoop-master/dfs/name;
+  114  ls
+  115  ls -all /usr/local/hadoop
+  116  clear
+  117  cd /usr/local/hadoop/
+  118  ls -all
+  119  cd hd-data
+  120  ls
+  121  cd ..
+  122  cd etc/hadoop
+  123  echo $HADOOP_HOME
+  124  nano hdfs-site.xml 
+  125  nano core-site.xml 
+  126  ip a
+  127  cat /etc/hosts
+  128  clear
+  129  nano yarn-site.xml 
+  130  nano mapred-site.xml
+  131  rm -rf /tmp/hadoop-master/dfs/name
+  132  cat ~/.bashrc
+  133  which hadoop
+  134  clear
+  135  hadoop namenode -format
+  136  clear
+  137  cd ..
+  138  ls hd-data
+  139  mkdir hd-data/nn
+  140  hadoop namenode -format
+  141  cd etc/hadoop
+  142  ls
+  143  nano hadoop-env.sh
+  144  clear
+  145  cd 
+  146  vi .bashrc
+  147  source .nashrc
+  148  source .bashrc
+  149  vi .bashrc
+  150  source .bashrc
+  151  vi .bashrc
+  152  source .bashrc
+  153  vi .bashrc
+  154  source .bashrc
+  155  ssh-copy-id -i ~/.ssh.id_rsa.pub master@maser
+  156  ssh-copy-id -i ~/.ssh.id_rsa.pub master@master
+  157  ssh-copy-id -i ~/.ssh/id_rsa.pub master@master
+  158  start-dfs.sh
+  159  jsp
+  160  jps
+  161  start-dfs.sh
+  162  vi .bashrc
+  163  ssh-copy-id -i ~/.ssh/id_rsa.pub master@master
+  164  source .bashrc
+  165  start-dfs.sh
+  166  source .bashrc
+  167  nano .bashrc
+  168  source .bashrc
+  169  start-dfs.sh
+  170  jps
+  171  source .bashrc
+  172  nano .bashrc
+  173  source .bashrc
+  174  start-dfs.sh
+  175  stop-all.sh
+  176  start-dfs.sh
+  177  jps
+  178  start-yarn.sh
+  179  jps
+  180  cat > word.txt
+  181  hdfs dfs -mkdir /demo
+  182  hdfs dfs -put word.txt /demo
+  183  hdfs dfs -ls /demo
+  184  scp /etc/hosts master@DN2
+  185  stop-all.sh
+  186  sudo init 0

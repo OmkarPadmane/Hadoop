@@ -1,0 +1,32 @@
+--- remove from master nodes for some times 
+
+master@master:/usr/local/hadoop/exclude$ nano hosts.exclude 
+		- DN3
+
+
+master@master:/usr/local/hadoop/exclude$ hdfs dfsadmin -refreshNodes
+
+
+
+---- if you want to add
+
+master@master:/usr/local/hadoop/exclude$ nano hosts.exclude 
+		- remove DN3 
+
+
+master@master:/usr/local/hadoop/exclude$ hdfs dfsadmin -refreshNodes
+
+
+
+---- if want to completely remove from master nodes
+
+
+master@master:/usr/local/hadoop/exclude$ nano hosts.exclude 
+		- DN3
+
+
+master@master:/usr/local/hadoop/exclude$ hdfs dfsadmin -refreshNodes
+
+
+master@master:/usr/local/hadoop/etc/hadoop$ nano workers 
+		- remvoe DN3 

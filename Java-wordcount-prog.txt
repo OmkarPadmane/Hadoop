@@ -1,0 +1,20 @@
+----- write a program in 
+
+	WordCount.java
+
+----- compile it in java
+
+	javac -classpath $CLASSPATH WordCount.java
+
+----- compress the java class file
+
+	jar cf wv.jar WordCount*.class
+
+
+----- make a dir in hadoop to run and store the program
+	hdfs dfs -mkdir /wc/input
+	hdfs dfs -put file.txt /wc/input
+
+---- to run wordcount program in datanodes
+
+	$ hadoop jar wc.jar WordCount /wc/input/ /wc/output
