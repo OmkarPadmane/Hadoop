@@ -1,0 +1,192 @@
+make an secondary namenode using dtatanode(converting DN3 into secondary namenode) :
+
+
+in master:
+
+$start-all.sh 
+$ cd /usr/local/Hadoop/etc/Hadoop
+$ ls
+$ nano workers
+	-- remove DN3
+$ hdfs dfsadmin -refreshNodes
+
+
+
+in DN3 :
+
+$ jps
+$ hadoop-demon.sh stop datanode  (to stop datanode)
+$ jps
+$ yarn-demonn.sh stop nodemanager    (to stop nodemanager)
+$ jps  (now all the services wiil be stoped)
+
+
+in master :
+$ hdfs dfsadmin -refreshNodes
+$ stop-all.sh
+$ jps
+
+
+in DN3 :
+
+$ sudo hostnamectl set-hostname snn
+$ sudo hostname snn
+	-- close terminal and restart , check the name on terminal it wiil be @snn
+$ sudo nano /etc/hosts
+	-- remane DN3 to snn then save
+$ cd /usr/local/hadoop/etc/hadoop
+$ ls
+$ rm -rf *   (all files iil be deleted)
+$ ls
+$ 
+
+
+in master:
+
+$ sudo nano /etc/hosts
+	-- remane DN3 to snn then save
+
+$ rsync -a /usr/local/hadoop/etc/hadoop/* hduser@snn://usr/local/hadoop/etc/hadoop/ 
+	-- yes (it wiil ask)
+$ ssh hduser@snn
+$ exit
+	Op of cmd:
+		logout
+		conection to snn closed
+
+cd /usr/local/hadoop/etc/Hadoop
+nano hdfs-site.xml
+	--edit add property at last
+
+	<property>
+	<name>dfs.secondary.http.address</name>
+	<value>snn:9869</value>
+	</property>             
+	
+	--save
+
+
+in snn :
+
+$ nano hdfs-site.xml    if dir is not available 
+	--edit in previous (dfs.data.dir)
+		dfs.namenode.checkpoint.dir
+		/usr/local/Hadoop/hd-data/snn
+	--save
+
+$ cd /usr/local/hadoop/hd-data   (if dir is not available the make it)-> mkdir hd-data
+$ ls 
+$ rm -rf *
+$ ls
+
+
+in master: 
+
+$ nano masters
+	--add text:
+	snn  (write in file)
+	--save
+$ start-all.sh
+$ jps
+
+
+
+in snn:
+
+$jps
+
+
+
+in master: 
+
+$ /usr/local/hadoop/hd-data/nn/current
+$ ls -la
+
+#conversion complete
+--------------------------------------------------------------------------
+
+
+Create user, Group and give them pernissions
+
+$ cd
+$ sudo adduser data1
+$ su - data1      (login as data1 )
+$ hdfs dfs -ls /     (it will not work do following)
+	$ echo $PATH
+	$ exit
+	$ sudo nano /etc/bash.bashrc
+		-- at the end of file
+			export PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin
+$ su - data1
+$ echo $PATH
+$ hdfs dfs -ls /    (now it wiil work)
+$ nano data1.txt
+	add txt
+$ hdfs ds -mkdir /data1
+	--permission denied
+
+$ su - hduser      (login as hduser)
+$ hdfs dfs -mkdir /data1
+$ hdfs dfs -chown data1 /data1
+$ hdfs dfs -ls /
+
+$ su - data1      (login as data1 )
+$ ls
+$ hdfs dfs -put data1.txt /data1
+$ hdfs dfs -ls /data1
+
+
+$ su - hduser      (login as hduser) or in master
+$ sudo addgroup project1
+$ sudo adduser --ingroup project1 dev1
+	--give password and then enter, enter...
+
+$ sudo adduser --ingroup project1 dev2
+	--give password and then enter, enter...
+$ hdfs dfs -mkdir /proj1     
+$ hdfs dfs -chown dev1:project1 /proj1    (change user and group)
+$ hdfs dfs -ls
+$ hdfs dfs -chmod g+w /proj1
+$ hdfs dfs -ls
+
+
+$ su - dev1     (login as dev1)
+$ nano dev1.txt
+	add txt
+$ hdfs dfs -put dev1.txt /proj1
+$ hdfs dfs -ls
+
+$ su -dev2     (login as dev2)
+$ nano dev2.txt
+	add txt
+$ hdfs dfs -put dev2.txt /proj1
+$ hdfs dfs -ls
+$ hdfa dfs -rm /proj1/dev1.txt
+$ exit
+
+
+in snn:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
