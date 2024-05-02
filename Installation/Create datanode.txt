@@ -1,0 +1,182 @@
+Create datanode:
+
+use for reference  : https://github.com/sandeepw1/hadoop --> master & nodes
+
+---go to master right click 
+	->manage->clone
+	--in clone
+		select : create full clone
+		give clone name & in path it will also change auto so it will create new folder
+---open cmd:
+	$ sudo hostnamectl set-hostname DN1      (follow this for dn2,...)
+	$ sudo hostname DN1                   (follow this for dn2,...)
+	$ cd /usr/local/hadoop
+	$ cat ~/.bashrc
+	$ nano ~/.bashrc
+		at the end paste (remove other lines) 
+			#JAVA
+			export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+			export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+			#Hadoop Environment Variables
+			export HADOOP_HOME=/usr/local/hadoop
+			export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+			export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+			# Add Hadoop bin/ directory to PATH
+			export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+			export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+			export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+			export PDSH_RCMD_TYPE=ssh
+
+---copy files : do this for every datanode
+
+	$ scp /etc/hosts hduser@DN1:/home/hduser	
+	$ scp /usr/local/hadoop/etc/hadoop/core-site.xml hduser@DN1:/usr/local/hadoop/etc/hadoop/
+	$ scp /usr/local/hadoop/etc/hadoop/hdfs-site.xml hduser@DN1:/usr/local/hadoop/etc/hadoop/
+	$ scp /usr/local/hadoop/etc/hadoop/yarn-site.xml hduser@DN1:/usr/local/hadoop/etc/hadoop/
+	$ scp /usr/local/hadoop/etc/hadoop/mapred-site.xml hduser@DN1:/usr/local/hadoop/etc/hadoop/
+	$ scp /usr/local/hadoop/etc/hadoop/hadoop-env.sh hduser@DN1:/usr/local/hadoop/etc/hadoop/
+
+
+	$ cd /etc/hadoop    (full path will be shown is /usr/local/hadoop/etc/hadoop )
+	
+	$ nano hadoop-env.sh
+		-remove previous lines
+		-paste at the end  
+		
+			 JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
+
+	$ nano core-site.xml
+		--paste
+			<property>
+       				 <name>fs.defaultFS</name>
+       				 <value>hdfs://master:9000</value>
+    			</property>
+	
+	$ nano hdfs-site.xml
+		--paste:
+  		<property>
+     		   	<name>dfs.data.dir</name>
+       	 		<value>/usr/local/hadoop/hd-data/dn</value>
+    		</property>
+    		<property>
+        		<name>dfs.replication</name>
+        		<value>2</value>    (2 means it  will copy same block on 2 nodes)
+    		</property>
+
+
+	$ nano yarn-site.xml
+		--paste:
+
+
+    		<property>
+       			<name>yarn.resourcemanager.hostname</name>
+        		<value>master</value>
+    		<property>
+        		<name>yarn.nodemanager.aux-services</name>
+        		<value>mapreduce_shuffle</value>
+    		</property>
+    		<property>
+        		<name>yarn.nodemanager.local-dirs</name>
+        		<value>/usr/local/hadoop/hd-data/yarn/data</value>
+    		</property>
+    		<property>
+        		<name>yarn.nodemanager.logs-dirs</name>
+        		<value>/usr/local/hadoop/hd-data/yarn/logs</value>
+    		</property>
+    		<property>
+        		<name>yarn.nodemanager.disk-health-checker.max-disk-utilization-perdisk-percentage</name>
+        		<value>99.9</value>
+    		</property>
+    		<property>
+        		<name>yarn.nodemanager.vmem-check-enabled</name>
+        		<value>false</value>
+    		</property>
+    		<property>
+        		<name>yarn.nodemanager.env-whitelist</name>
+        		<value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    		</property>
+
+	$ nano mapred-site.xml
+		--paste:
+		<property>
+        		<name>mapreduce.framework.name</name>
+        		<value>yarn</value>
+    		</property>
+    		<property>
+        		<name>mapreduce.application.classpath</name>
+        		<value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+    		</property>
+
+	$ nano workers
+		--file only contains 
+			localhost
+
+in master :
+
+	$ nano workers
+		--file only contains 
+			DN1,DN.. (add datande names)
+
+
+restart datanode
+
+
+--------------------------------------------------------
+After creating node:       (follow this for dn2,...)
+
+in datanode:					
+cmd :						
+	$ ip a					
+							
+								
+
+in master:
+cmd :
+	$ ip a
+	$ sudo nano /etc/hosts
+		insert: 
+			(ip of master) master
+			(ip of DN1)  DN1
+
+
+	$ ssh-keygen -t rsa (if key has already created than no need)
+	$ ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@DN1
+
+
+
+	$ ls
+	$ cd nano workers
+	$ mkdir /usr/local/hadoop/hd-data
+
+
+in DN1 :
+
+	$ sudo cp hosts /etc/hosts
+	$ cd /usr/local/hadoop
+	$ mkdir hd-data  (in /usr/local/hadoop/ )
+	$ mkdir yarn  (in /usr/local/hadoop/ )
+
+
+in master :
+	$ hadoop namenode -format
+	$ source .bashrc
+
+restart
+
+in master :
+	$ start-all.sh
+	$ jps
+
+in datanode :
+
+	$ jps
+
+in master :
+	in browser
+		http://master:9870
+
+-----------------------------
+for creating dn2,dn3,...
+take snapshot of dn1 then clone it.
+
+
