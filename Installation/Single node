@@ -1,0 +1,234 @@
+---Ubuntu Virtual Machine Images for VirtualBox and VMware
+	--Ubuntu 22.04 Jammy Jellyfish (Virchtualware)
+	-- link : https://www.osboxes.org/ubuntu/#ubuntu-22-04-jammy-vbox
+
+---gitlink : https://github.com/sandeepw1/hadoop  --> Installing a Single Node Hadoop Cluster.pdf
+
+---Download file :  https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz  
+
+---open vm 
+	-new vm
+	-Custom -> next -> i will install later
+	-Linux -> ubuntu 64-bit -> next
+	- Vm name ->select location ->next -> next ->next
+	-use NAT ->LSI Logic ->SCSI
+	-Use an existing virtual disk -> select file(ubuntu 64) ->next
+	-click on keep existing format
+	-finish
+
+	
+
+---change password of user(osboxes)
+	$ sudo passwd osboxes
+
+
+---add user:
+	$ sudo adduser hduser
+	
+
+	$sudo visudo
+		--add it under root
+		hduser  ALL=(ALL) NOPASSWD:ALL  
+
+
+---switch user to hduser
+
+	$ sudo apt update
+	$ java version
+	$ sudo apt install openjdk-8-jdk -y
+	$ sudo apt install net-tools -y
+	$ sudo apt install ssh vim pdsh
+	
+	$ cd
+
+---set hostname
+	
+	$ sudo hostnamectl set-hostname master
+	$ sudo hostname master
+	(open new terminal)
+
+---go to git
+	-- https://github.com/sandeepw1/hadoop/Installing a Single Node Hadoop Cluster.pdf
+	 
+---cmd 
+
+	$ nano .bashrc 
+		--paste info given in git file at the end of bashrc file	
+
+	#JAVA
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+	export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+	#Hadoop Environment Variables
+	export HADOOP_HOME=/usr/local/hadoop
+	export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+	export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+	# Add Hadoop bin/ directory to PATH
+	export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport 	
+	HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native" export 	
+	PDSH_RCMD_TYPE=ssh
+
+	$ source ~/.bashrc
+
+
+---Setup SSH
+	
+	$ sudo systemctl start ssh
+	$ sudo systemctl enable ssh
+
+
+--- Enable passwordless SSH
+
+	$ ssh-keygen -t rsa
+
+	Press Enter on all prompts. This will create a .ssh folder and id_rsa and id_rsa.pubfile in the user home directory. 
+
+	Copy the public key file
+
+	$ ssh-copy-id -i ~/.ssh/id_rsa.pub hpcsa@localhost  --(hpcsa is username)
+						
+	Check using command , it should not ask for the password. 
+
+	$ ssh hduser@localhost     --(hpcsa is username)
+
+
+---Download Hadoop
+
+	$ cd
+	$ wget -c -O hadoop.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz
+	$ sudo mkdir /usr/local/hadoop
+	$ tar xvzf hadoop.tar.gz
+	$ sudo mv hadoop-3.2.4/* /usr/local/hadoop
+
+
+---Configure Hadoop
+
+	Create directories for Namenode and datanode
+
+	$ sudo mkdir -p /usr/local/hadoop/hd_store/tmp
+	$ sudo mkdir -p /usr/local/hadoop/hd_store/namenode
+	$ sudo mkdir -p /usr/local/hadoop/hd_store/datanode
+
+	$ sudo chown -R hpcsa:hpcsa /usr/local/hadoop
+	$ sudo chmod -R 755 /usr/local/Hadoop
+
+
+---Configure files
+
+	$ cd /usr/local/hadoop/etc/hadoop
+		
+	$ nano hadoop-env.sh
+			-inside the file at last paste 
+
+	(write username where the hduser is )
+
+			#JAVA
+			export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+			export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+			#Hadoop Environment Variables
+			export HADOOP_HOME=/usr/local/hadoop
+			export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+			export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+			export HDFS_NAMENODE_USER=hduser
+			export HDFS_DATANODE_USER=hduser
+			export HDFS_SECONDARYNAMENODE_USER=hduser
+			export YARN_RESOURCEMANAGER_USER=hduser
+			export YARN_NODEMANAGER_USER=hduser
+			export YARN_NODEMANAGER_USER=hduser
+			# Add Hadoop bin/ directory to PATH
+			export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+			export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+			export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+		
+		
+	$ nano core-site.xml
+
+	
+			<configuration>
+			<property>
+			<name>hadoop.tmp.dir</name>
+			<value>/usr/local/hadoop/hd_store/tmp</value>
+			</property>
+			<property>
+			<name>fs.defaultFS</name>
+			<value>hdfs://master:9000</value>   
+			</property>
+			</configuration>
+
+	$ nano yarn-site.xml
+			 
+			<configuration>
+			<property>
+			<name>yarn.nodemanager.aux-services</name>
+			<value>mapreduce_shuffle</value>
+			</property>
+			</configuration>
+
+	$ nano hdfs-site.xml
+
+
+			<configuration>
+			<property>
+			<name>dfs.replication</name>
+			<value>1</value>
+			</property>
+			<property>
+			<name>dfs.name.dir</name>
+			<value>/usr/local/hadoop/hd_store/namenode</value>
+			</property>
+			<property>
+			<name>dfs.data.dir</name>
+			<value>/usr/local/hadoop/hd_store/datanode</value>
+			</property>
+			</configuration>
+
+
+	$ nano mapred-site.xml
+
+			<configuration>
+			<property>
+			<name>mapreduce.framework.name</name>
+			<value>yarn</value>
+			</property>
+			</configuration>
+
+
+
+---Edit workers file and add localhost entry
+	
+	$ nano workers
+		in file:
+			localhost        (remove localhost & add DN1,DN.. at time singlenosde, multinode)
+
+
+---Start Hadoop daemons
+
+	$ cd $HADOOP_HOME/sbin    (cd /usr/local/Hadoop/sbin)
+
+	$ hadoop namenode -format
+		--if this cmd not work then do 
+			$ sudo chown -R hpcsa:hpcsa /usr/local/hadoop
+			$ sudo chmod -R 755 /usr/local/hadoop
+			-then again check
+
+	format
+
+	$start-dfs.sh  (this cmd wiil not work until you don't create datanode)
+	$ jps 
+	$Start-yarn.sh 
+	$ jps 
+
+
+
+---take snapshot of master
+	before taking snapshot close all the application and then power off the system
+
+---then go to master right click 
+	->manage->clone
+	--in clone
+		select : create full clone
+		give clone name & in path it will also change auto so it will create new folder
+
+		
+
+
