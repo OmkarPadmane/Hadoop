@@ -110,7 +110,7 @@
 	$ sudo mkdir -p /usr/local/hadoop/hd_store/datanode
 
 	$ sudo chown -R hpcsa:hpcsa /usr/local/hadoop
-	$ sudo chmod -R 755 /usr/local/Hadoop
+	$ sudo chmod -R 755 /usr/local/hadoop
 
 
 ---Configure files
