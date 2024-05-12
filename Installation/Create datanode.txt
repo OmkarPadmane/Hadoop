@@ -214,6 +214,7 @@ in DN1 :
 
 	$ cd /usr/local/hadoop
 	$ mkdir hd-data  (in /usr/local/hadoop/ )
+               $ mkdir /hd-data/dn    (in hd-data make dn)
 	$ mkdir yarn  (in /usr/local/hadoop/ )
 
 
