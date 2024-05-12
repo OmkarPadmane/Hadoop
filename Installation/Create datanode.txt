@@ -176,7 +176,11 @@ restart master
 
 
 --------------------------------------------------------
-After creating node:       (follow this for dn2,...)
+After creating node:       (follow this for dn2,...) 
+
+	at the time dn2,.. :
+		put his ip in both master and dn1 
+		
 
 in datanode:					
 cmd :						
