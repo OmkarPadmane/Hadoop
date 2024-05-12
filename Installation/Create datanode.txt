@@ -201,6 +201,7 @@ cmd :
 	$ ls
 	$ cd nano workers
 	$ mkdir /usr/local/hadoop/hd-data
+        $ mkdir /usr/local/hadoop/hd-data/nn
 
 
 in DN1 :
