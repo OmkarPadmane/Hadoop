@@ -211,7 +211,6 @@ in DN1 :
 			(ip of master) master
 			(ip of DN1)  DN1
 
-	$ sudo cp hosts /etc/hosts
 	$ cd /usr/local/hadoop
 	$ mkdir hd-data  (in /usr/local/hadoop/ )
 	$ mkdir yarn  (in /usr/local/hadoop/ )
