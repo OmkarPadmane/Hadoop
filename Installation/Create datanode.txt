@@ -114,6 +114,7 @@ use for reference  : https://github.com/sandeepw1/hadoop --> master & nodes
 	$ nano workers
 		--file only contains 
 			localhost
+restart datanode
 
 in master :
 
@@ -171,7 +172,7 @@ in master :
     		</property>
 
 
-restart datanode
+restart master
 
 
 --------------------------------------------------------
