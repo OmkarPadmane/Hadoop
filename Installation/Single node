@@ -211,7 +211,8 @@
 			$ sudo chmod -R 755 /usr/local/hadoop
 			-then again check
 
-	format
+
+Restart 
 
 	$start-dfs.sh  (this cmd wiil not work until you don't create datanode)
 	$ jps 
