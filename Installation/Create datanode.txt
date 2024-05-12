@@ -38,6 +38,7 @@ use for reference  : https://github.com/sandeepw1/hadoop --> master & nodes
 	$ scp /usr/local/hadoop/etc/hadoop/mapred-site.xml hduser@DN1:/usr/local/hadoop/etc/hadoop/
 	$ scp /usr/local/hadoop/etc/hadoop/hadoop-env.sh hduser@DN1:/usr/local/hadoop/etc/hadoop/
 
+---in datanode:
 
 	$ cd /etc/hadoop    (full path will be shown is /usr/local/hadoop/etc/hadoop )
 	
