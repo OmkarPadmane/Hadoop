@@ -117,9 +117,58 @@ use for reference  : https://github.com/sandeepw1/hadoop --> master & nodes
 
 in master :
 
+	$ cd /etc/hadoop    (full path will be shown is /usr/local/hadoop/etc/hadoop )
+
 	$ nano workers
 		--file only contains 
 			DN1,DN.. (add datande names)
+
+		
+	$ nano hadoop-env.sh
+		-remove previous lines
+		-paste at the end  
+
+			JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+
+	$ nano core-site.xml
+		--paste
+
+  		 <property>
+   			     <name>fs.defaultFS</name>
+    			     <value>hdfs://master:9000</value>
+   		 </property>
+	
+	$ nano hdfs-site.xml
+		--paste:
+  	
+			 <property>
+      				  <name>dfs.name.dir</name>
+     				   <value>/usr/local/hadoop/hd-data/nn</value>
+  			  </property>
+  			  <property>
+  				      <name>dfs.replication</name>
+   				     <value>2</value>
+ 			   </property>
+
+	$ nano yarn-site.xml
+		--paste:
+
+		    <property>
+      			  <name>yarn.resourcemanager.hostname</name>
+       			  <value>master</value>
+   		   </property>
+
+	$ nano mapred-site.xml
+		--paste:
+
+		    <property>
+       			        <name>mapreduce.framework.name</name>
+        			<value>yarn</value>
+    		</property>
+    		<property>
+        		<name>mapreduce.application.classpath</name>
+        		<value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+    		</property>
 
 
 restart datanode
