@@ -10,6 +10,8 @@ use for reference  : https://github.com/sandeepw1/hadoop --> master & nodes
 ---open cmd:
 	$ sudo hostnamectl set-hostname DN1      (follow this for dn2,...)
 	$ sudo hostname DN1                   (follow this for dn2,...)
+	(open new terminal)
+
 	$ cd /usr/local/hadoop
 	$ cat ~/.bashrc
 	$ nano ~/.bashrc
