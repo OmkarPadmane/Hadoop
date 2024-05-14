@@ -25,7 +25,7 @@ Save the file.
  source /etc/bash.bashrc 
 
 5. Check Pig
- pig -versionpig
+ pig -version
 
 Apache Pig executes in 2 modes - Local Mode and MapReduce Mode
 
@@ -56,6 +56,24 @@ ls
 ./mr-jobhistory-daemon.sh start historyserver
 jps  (see that JobHistoryServer is visible)
 
+---------------------------
+check pig in another user
+
+---in hduser:
+      give permissions:
+       $ hdfs dfs -chmod -R 755 /tmp
+       $ ls
+
+---in zoro   (another user):
+     (user must have permission)
+      vim text1.txt
+          dkfksdf
+          sdjbsdv
+          sdjksd
+     
+      $ pig
+        grunt> demo1 = load '/forcast/text1.txt' as (name:chararray);
+        grunt> dump demo1;
 
 
 MapReduce Mode -
